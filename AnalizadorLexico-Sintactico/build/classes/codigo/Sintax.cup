@@ -1,0 +1,118 @@
+package codigo;
+
+import java_cup.runtime.Symbol;
+
+parser code
+{:
+    private Symbol s;
+    
+    public void syntax_error(Symbol s){
+        this.s = s;
+    }
+
+    public Symbol getS(){
+        return this.s;
+}
+:};
+
+terminal Linea, PUBLIC , PRIVATE, CLASS, VOID, DOUBLE, CHAR, INT, STRING, FLOAT, 
+    RETURN, Cadena, Parentesis_a, Parentesis_c, Llave_a, Llave_c,
+    name, P_coma, Coma, ComaInt, ComaDouble, ComaChar, ComaString, ComaFloat, nada,
+    ERROR;
+non terminal INICIO, DeclararVariable, CONSTRUCTOR, TIPODATOS, MASDATOS, RESTO, FUNCIONES, TIPODATOFUNCION, RESTOFUNCION,
+    RESTODECLARACION, RESTODECLARAR, MASRESTODATA,
+    NAME;
+
+start with INICIO;
+
+INICIO ::= 
+    PUBLIC CLASS name Llave_a DeclararVariable CONSTRUCTOR Llave_a Llave_c FUNCIONES Llave_c
+;
+
+
+RESTODECLARAR ::=
+    PUBLIC TIPODATOFUNCION name P_coma |  
+    PRIVATE TIPODATOFUNCION name P_coma |
+    TIPODATOFUNCION name P_coma
+;
+
+RESTOFUNCION ::=
+    PUBLIC TIPODATOFUNCION name Parentesis_a Parentesis_c Llave_a Llave_c RESTOFUNCION |
+    PUBLIC VOID name Parentesis_a Parentesis_c Llave_a Llave_c RESTOFUNCION |
+    PRIVATE TIPODATOFUNCION name Parentesis_a Parentesis_c Llave_a Llave_c RESTOFUNCION | 
+    PRIVATE VOID name Parentesis_a Parentesis_c Llave_a Llave_c RESTOFUNCION |
+    VOID name Parentesis_a Parentesis_c Llave_a Llave_c RESTOFUNCION |
+    TIPODATOFUNCION name Parentesis_a Parentesis_c Llave_a Llave_c RESTOFUNCION |
+    
+;
+
+TIPODATOFUNCION ::= 
+    DOUBLE |
+    CHAR |
+    INT |
+    STRING |
+    FLOAT
+    
+;
+FUNCIONES ::=
+    PUBLIC TIPODATOFUNCION name Parentesis_a Parentesis_c Llave_a Llave_c RESTOFUNCION |
+    PUBLIC VOID name Parentesis_a Parentesis_c Llave_a Llave_c RESTOFUNCION |
+    PRIVATE TIPODATOFUNCION name Parentesis_a Parentesis_c Llave_a Llave_c RESTOFUNCION |
+    PRIVATE VOID name Parentesis_a Parentesis_c Llave_a Llave_c RESTOFUNCION |
+    VOID name Parentesis_a Parentesis_c Llave_a Llave_c RESTOFUNCION |
+    TIPODATOFUNCION name Parentesis_a Parentesis_c Llave_a Llave_c RESTOFUNCION
+;
+
+
+RESTO ::= 
+    ComaDouble name RESTO |
+    ComaChar name RESTO |
+    ComaInt name RESTO |
+    ComaString name RESTO |
+    ComaFloat name RESTO |
+    name name RESTO |
+;
+MASDATOS ::= 
+    ComaDouble name RESTO |
+    ComaChar name RESTO |
+    ComaInt name RESTO |
+    ComaString name RESTO |
+    ComaFloat name RESTO |
+    name name RESTO |
+;
+
+TIPODATOS ::= 
+    DOUBLE name MASDATOS |
+    CHAR name MASDATOS |
+    INT name MASDATOS |
+    STRING name MASDATOS |
+    FLOAT name MASDATOS |
+    name name MASDATOS
+;
+
+CONSTRUCTOR ::=
+    PUBLIC name Parentesis_a TIPODATOS Parentesis_c |
+    PRIVATE name Parentesis_a TIPODATOS Parentesis_c
+;
+
+MASRESTODATA ::=
+    DeclararVariable RESTODECLARAR
+;
+
+DeclararVariable ::= 
+    PUBLIC TIPODATOFUNCION name P_coma |
+    PRIVATE TIPODATOFUNCION name P_coma |
+    MASRESTODATA |
+    TIPODATOFUNCION name P_coma
+;
+
+
+
+
+
+
+
+
+
+
+
