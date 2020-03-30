@@ -94,7 +94,6 @@ public class GenerarPDF {
                     JOptionPane.showMessageDialog(null, "Ocurrio un error al crear el archivo", "", 1);
                     System.exit(-1);
                 }
-
             }
         }
     }
