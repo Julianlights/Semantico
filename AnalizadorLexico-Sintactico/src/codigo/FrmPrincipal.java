@@ -6,6 +6,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.StringReader;
 import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java_cup.runtime.Symbol;
@@ -20,6 +22,8 @@ public class FrmPrincipal extends javax.swing.JFrame {
     /**
      * Creates new form FrmPrincipal
      */
+    ArrayList<String> cadenaData = new ArrayList<>();
+
     public FrmPrincipal() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -31,49 +35,65 @@ public class FrmPrincipal extends javax.swing.JFrame {
         String expr = (String) txtResultado.getText();
         Lexer lexer = new Lexer(new StringReader(expr));
         String resultado = "LINEA " + cont + "\t\tSIMBOLO\n";
+
         while (true) {
             Tokens token = lexer.yylex();
             if (token == null) {
                 txtAnalizarLex.setText(resultado);
                 return;
             }
+
             switch (token) {
+
                 case Linea:
                     cont++;
                     resultado += "LINEA " + cont + "\n";
+
                     break;
 
                 case Parentesis_a:
                     resultado += "  <Parentesis de apertura>\t" + lexer.lexeme + "\n";
+
                     break;
                 case Parentesis_c:
                     resultado += "  <Parentesis de cierre>\t" + lexer.lexeme + "\n";
+
                     break;
                 case Llave_a:
                     resultado += "  <Llave de apertura>\t" + lexer.lexeme + "\n";
+
                     break;
                 case Llave_c:
                     resultado += "  <Llave de cierre>\t" + lexer.lexeme + "\n";
+
                     break;
                 case P_coma:
                     resultado += "  <Punto y coma>\t" + lexer.lexeme + "\n";
+
                     break;
                 case Coma:
                     resultado += "  <Coma>\t" + lexer.lexeme + "\n";
+
                     break;
                 case Identificador:
                     resultado += "  <Identificador>\t\t" + lexer.lexeme + "\n";
+                    cadenaData.add(lexer.lexeme + "__________");
+
                     break;
                 case Reservada:
                     resultado += "  <Reservada>\t\t" + lexer.lexeme + "\n";
+
                     break;
                 case ERROR:
                     resultado += "  <Simbolo no definido>\t\t" + lexer.lexeme + "\n";
+
                     break;
                 default:
                     resultado += "  < " + lexer.lexeme + " >\n";
+
                     break;
             }
+
         }
     }
 
@@ -257,6 +277,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private void btnLimpiarLexActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarLexActionPerformed
         // TODO add your handling code here:
         txtAnalizarLex.setText(null);
+        cadenaData.clear();
     }//GEN-LAST:event_btnLimpiarLexActionPerformed
 
     private void btnLimpiarSinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarSinActionPerformed
@@ -265,7 +286,19 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLimpiarSinActionPerformed
 
     private void btnAnalizarLexActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnalizarLexActionPerformed
+        //cadenaData.add(txtResultado.getText());
+
         try {
+            //System.out.println("---> " + Arrays.toString(cadenaData.toArray()));
+            try {
+                if (cadenaData.get(0) == null ? cadenaData.get(4) == null : cadenaData.get(0).equals(cadenaData.get(4))) {
+                    System.out.println("Correcto");
+                } else {
+                    System.err.println("Error, No coinciden");
+                }
+            } catch (Exception e) {
+            }
+
             analizarLexico();
         } catch (IOException ex) {
             Logger.getLogger(FrmPrincipal.class.getName()).log(Level.SEVERE, null, ex);
@@ -273,7 +306,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAnalizarLexActionPerformed
 
     private void btnAnalizarSinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnalizarSinActionPerformed
-        // TODO add your handling code here:
+
         String ST = txtResultado.getText();
         Sintax s = new Sintax(new codigo.LexerCup(new StringReader(ST)));
 
