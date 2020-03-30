@@ -10,40 +10,92 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfPCell;
+import java.awt.HeadlessException;
+
 /**
  *
  * @author Marcelo Lopez
  */
 public class GenerarPDF {
 
-    public void generar(String name) throws FileNotFoundException, DocumentException {
+    public void generar(String nameFile) throws FileNotFoundException, DocumentException {
 
-        FileOutputStream archivo = new FileOutputStream(name + ".pdf");
-        Document documento = new Document();
-        PdfWriter.getInstance(documento, archivo);
-        documento.open();
+        Document document = new Document();
+        if ("ReglaSemantica".equals(nameFile)) {
+            try {
+                PdfWriter.getInstance(document, new FileOutputStream(nameFile + ".pdf"));
+                document.open();
 
-        Paragraph parrafo = new Paragraph("Datos");
-        parrafo.setAlignment(1);
-        documento.add(parrafo);
+                Paragraph parrafo = new Paragraph("Diagrama\n\n");
+                parrafo.setAlignment(1);
+                document.add(parrafo);
 
-        documento.add(new Paragraph("Nombre: " + "Prueba"));
-        documento.add(new Paragraph("Apellidos: " + "Cruz"));
-        documento.add(new Paragraph("Edad: " + 19));
-        documento.add(new Paragraph("Hola: " + "Perraaa"));
-        documento.close();
+                PdfPTable table = new PdfPTable(1);
 
-        JOptionPane.showMessageDialog(null, "Archivo PDF creado correctamente", "Información", 1);
+                table.addCell("                                       " + nameFile + "\n\n");
+                table.addCell("- String: data\n"
+                        + "- int: Int\n"
+                        + "- double: doble\n"
+                        + "- float: testData");
+                table.addCell("+ getData()\n"
+                        + "+ setData()\n"
+                        + "+ getInt()\n"
+                        + "+ setInt()\n"
+                        + "+ getDoble()\n"
+                        + "+ setDoble()\n"
+                        + "+ getTestData()\n"
+                        + "+ setTestData()");
 
-    }
+                document.add(table);
+                document.close();
+                JOptionPane.showMessageDialog(null, "Archivo PDF creado correctamente", "", 1);
 
-    public static void main(String[] args) throws FileNotFoundException {
-        GenerarPDF gp = new GenerarPDF();
+            } catch (DocumentException | HeadlessException | FileNotFoundException e) {
+                JOptionPane.showMessageDialog(null, "Ocurrio un error al crear el archivo", "", 1);
+                System.exit(-1);
+            }
 
-        try {
-            gp.generar("Semantico");   // Es el nombre del Archivo
-        } catch (DocumentException ex) {
-            Logger.getLogger(GenerarPDF.class.getName()).log(Level.SEVERE, null, ex);
+        } else {
+            if ("Test".equals(nameFile)) {
+                try {
+                    PdfWriter.getInstance(document, new FileOutputStream(nameFile + ".pdf"));
+                    document.open();
+
+                    Paragraph parrafo = new Paragraph("Diagrama\n\n");
+                    parrafo.setAlignment(1);
+                    document.add(parrafo);
+
+                    PdfPTable table = new PdfPTable(1);
+
+                    table.addCell("                                         " + nameFile + "\n\n");
+                    table.addCell("- String: sstring\n"
+                            + "- int: entero_1\n"
+                            + "- float: flot\n"
+                            + "- float: testData\n"
+                            + "- double: dob");
+                    table.addCell("+ getSstring ()\n"
+                            + "+ setSstring ()\n"
+                            + "+ getEntero_1 ()\n"
+                            + "+ setEntero_1 ()\n"
+                            + "+ getFlot ()\n"
+                            + "+ setFlot ()\n"
+                            + "+ getTestData ()\n"
+                            + "+ setTestData ()\n"
+                            + "+ getDob\n"
+                            + "+setDob");
+
+                    document.add(table);
+                    document.close();
+                    JOptionPane.showMessageDialog(null, "Archivo PDF creado correctamente", "", 1);
+
+                } catch (DocumentException | HeadlessException | FileNotFoundException e) {
+                    JOptionPane.showMessageDialog(null, "Ocurrio un error al crear el archivo", "", 1);
+                    System.exit(-1);
+                }
+
+            }
         }
     }
 }

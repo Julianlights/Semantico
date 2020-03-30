@@ -1,5 +1,6 @@
 package codigo;
 
+import com.itextpdf.text.DocumentException;
 import java.awt.Color;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -23,6 +24,8 @@ public class FrmPrincipal extends javax.swing.JFrame {
      * Creates new form FrmPrincipal
      */
     ArrayList<String> cadenaData = new ArrayList<>();
+    public boolean Compiled = false;
+    public static String setNameClass = "";
 
     public FrmPrincipal() {
         initComponents();
@@ -48,49 +51,38 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 case Linea:
                     cont++;
                     resultado += "LINEA " + cont + "\n";
-
                     break;
 
                 case Parentesis_a:
                     resultado += "  <Parentesis de apertura>\t" + lexer.lexeme + "\n";
-
                     break;
                 case Parentesis_c:
                     resultado += "  <Parentesis de cierre>\t" + lexer.lexeme + "\n";
-
                     break;
                 case Llave_a:
                     resultado += "  <Llave de apertura>\t" + lexer.lexeme + "\n";
-
                     break;
                 case Llave_c:
                     resultado += "  <Llave de cierre>\t" + lexer.lexeme + "\n";
-
                     break;
                 case P_coma:
                     resultado += "  <Punto y coma>\t" + lexer.lexeme + "\n";
-
                     break;
                 case Coma:
                     resultado += "  <Coma>\t" + lexer.lexeme + "\n";
-
                     break;
                 case Identificador:
                     resultado += "  <Identificador>\t\t" + lexer.lexeme + "\n";
-                    cadenaData.add(lexer.lexeme + "__________");
-
+                    cadenaData.add(lexer.lexeme);
                     break;
                 case Reservada:
                     resultado += "  <Reservada>\t\t" + lexer.lexeme + "\n";
-
                     break;
                 case ERROR:
                     resultado += "  <Simbolo no definido>\t\t" + lexer.lexeme + "\n";
-
                     break;
                 default:
                     resultado += "  < " + lexer.lexeme + " >\n";
-
                     break;
             }
 
@@ -286,19 +278,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLimpiarSinActionPerformed
 
     private void btnAnalizarLexActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnalizarLexActionPerformed
-        //cadenaData.add(txtResultado.getText());
-
         try {
-            //System.out.println("---> " + Arrays.toString(cadenaData.toArray()));
-            try {
-                if (cadenaData.get(0) == null ? cadenaData.get(4) == null : cadenaData.get(0).equals(cadenaData.get(4))) {
-                    System.out.println("Correcto");
-                } else {
-                    System.err.println("Error, No coinciden");
-                }
-            } catch (Exception e) {
-            }
-
             analizarLexico();
         } catch (IOException ex) {
             Logger.getLogger(FrmPrincipal.class.getName()).log(Level.SEVERE, null, ex);
@@ -314,10 +294,24 @@ public class FrmPrincipal extends javax.swing.JFrame {
             s.parse();
             txtAnalizarSin.setText("Analisis realizado correctamente");
             txtAnalizarSin.setForeground(new Color(25, 111, 61));
+            Compiled = true;
         } catch (Exception ex) {
             Symbol sym = s.getS();
             txtAnalizarSin.setText("Error de sintaxis. Linea: " + (sym.right + 1) + " Columna: " + (sym.left + 1) + ", Texto: \"" + sym.value + "\"");
             txtAnalizarSin.setForeground(Color.red);
+        }
+
+        if (Compiled == true) {
+            GenerarPDF gp = new GenerarPDF();
+            
+            try {
+                analizarLexico();
+                gp.generar(cadenaData.get(0));
+                
+            } catch (DocumentException | IOException e) {
+            }
+        } else {
+            System.err.println("Error, No fue posible crear el Diagrama");
         }
     }//GEN-LAST:event_btnAnalizarSinActionPerformed
 

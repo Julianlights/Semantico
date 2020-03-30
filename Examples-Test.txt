@@ -7,18 +7,18 @@ public class ReglaSemantica {
     double doble;
     float testData;
     
-    public ReglaSemantica(String data, int Int, double doble, float testData) {}
+     public ReglaSemantica(String data ,int Int ,double doble ,float testData) {}
     
 
     public String getData() {}
-    public void setData(String data) {}
+    public void setData() {}
     public int getInt() {}
-    public void setInt(int Int) {}
+    public void setInt() {}
     public double getDoble() {}
-    public void setDoble(double doble) {}
+    public void setDoble() {}
     public float getTestData() {}
-    public void setTestData(float testData){} 
-}
+    public void setTestData(){} 
+
 }
 
 ==========================================================================================
@@ -32,18 +32,18 @@ public class Test {
     float testData;
     double dob;
 
-    public Test(String sstring, int entero_1, float flot, float testData, double dob) {}
+    public Test(String sstring ,int entero_1 ,float flot ,float testData ,double dob) {}
 
     public String getSstring() {}
     public void setSstring() {}
     public int getEntero_1() {}
-    public void setEntero_1(int entero_1) {}
+    public void setEntero_1() {}
     public float getFlot() {}
-    public void setFlot(float flot) {}
+    public void setFlot() {}
     public float getTestData() {}
-    public void setTestData(float testData) {}
+    public void setTestData() {}
     public double getDob() {}
-    public void setDob(double dob) {}
+    public void setDob() {}
 }
 
 
@@ -61,7 +61,7 @@ public class NewTest {
     private int dataInt;
     int _dat9a;
 
-    public Test_1(int dataTest, String hola_12, String data, Int dataInt, int _dat9a) {}
+    public Test_1(int dataTest ,String hola_12 ,String data ,Int dataInt ,int _dat9a) {}
 
     public int getDataTest() { }
     public void setDataTest() { }
