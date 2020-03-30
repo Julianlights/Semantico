@@ -1,0 +1,76 @@
+		=========================	1	======================
+
+public class ReglaSemantica {
+    
+    public String data;
+    private int Int;
+    double doble;
+    float testData;
+    
+    public ReglaSemantica(String data, int Int, double doble, float testData) {}
+    
+
+    public String getData() {}
+    public void setData(String data) {}
+    public int getInt() {}
+    public void setInt(int Int) {}
+    public double getDoble() {}
+    public void setDoble(double doble) {}
+    public float getTestData() {}
+    public void setTestData(float testData){} 
+}
+}
+
+==========================================================================================
+		=========================	2	======================
+
+public class Test {
+    
+    String sstring;
+    int entero_1;
+    private float flot;
+    float testData;
+    double dob;
+
+    public Test(String sstring, int entero_1, float flot, float testData, double dob) {}
+
+    public String getSstring() {}
+    public void setSstring() {}
+    public int getEntero_1() {}
+    public void setEntero_1(int entero_1) {}
+    public float getFlot() {}
+    public void setFlot(float flot) {}
+    public float getTestData() {}
+    public void setTestData(float testData) {}
+    public double getDob() {}
+    public void setDob(double dob) {}
+}
+
+
+==========================================================================================
+		=========================	3	======================
+		
+		Es la clase en donde va a fallar --> Hay 3 fallas: Test_1, Int y 6String
+               --------------------------------------------------------------------------
+
+public class NewTest {
+    
+    private int dataTest;
+    public String hola_12;
+    public String data;
+    private int dataInt;
+    int _dat9a;
+
+    public Test_1(int dataTest, String hola_12, String data, Int dataInt, int _dat9a) {}
+
+    public int getDataTest() { }
+    public void setDataTest() { }
+    public String getHola_12() {}
+    public void setHola_12() {}
+    public 6String getData() {}
+    public void setData() { }
+    public int getDataInt() { }
+    public void setDataInt() {}
+    public int getDat9a() {}
+    public void setDat9a(){}  
+}
